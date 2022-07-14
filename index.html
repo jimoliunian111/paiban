@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>排班</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <style>
+      #app {
+        width: 100vw;
+        height: 100vh;
+        height: 100%;
+      }
+      .row-item {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-content: center;
+        align-items: center;
+        width: 100%;
+        height: 80px;
+        border-bottom: 1px solid #efefef;
+      }
+      .input-style {
+        width: 70vw;
+        height: 32px;
+        margin-right: 6vw;
+      }
+      .input-style input {
+        width: 100%;
+        height: 32px;
+      }
+      .sure-btn {
+        width: 60px;
+        height: 32px;
+        line-height: 32px;
+        cursor: pointer;
+        font-size: 14px;
+        text-align: center;
+        color: #ffffff;
+        background-color: #409EFF;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+      <div class="row-item">
+        <div class="input-style">
+          <input id="dateVal" type="date" placeholder="请输入日期">
+        </div>
+        <div class="sure-btn" id="sureBtn">确定</div>
+      </div>
+    </div>
+    <script>
+      window.onload = function () {
+        let obj = {
+          '1': {type: '早班', days: '1', name: '第1天早班'},
+          '2': {type: '早班', days: '2', name: '第2天早班'},
+          '3': {type: '早班', days: '3', name: '第3天早班'},
+          '4': {type: '晚班', days: '1', name: '第1天晚班'},
+          '5': {type: '晚班', days: '2', name: '第2天晚班'},
+          '6': {type: '晚班', days: '3', name: '第3天晚班'},
+          '7': {type: '休息', days: '1', name: '休息1天'},
+          '8': {type: '中班', days: '1', name: '第1天中班'},
+          '9': {type: '中班', days: '2', name: '第2天中班'},
+          '0': {type: '中班', days: '3', name: '第3天中班'},
+        }
+        
+        let startDate = '2022-07-14'
+        let startD = new Date(startDate).getTime()
+        console.log('已就绪', startDate)
+        let dateVal = document.getElementById('dateVal')
+        document.getElementById('sureBtn').onclick = function () {
+          console.log('当前选择日期：', dateVal.value)
+          if (!dateVal.value) {
+            alert('请选择查询日期')
+            return
+          }
+          let endDate = dateVal.value
+          let endD = new Date(dateVal.value).getTime()
+          let dif = Math.abs((endD - startD) / (1000 * 60 * 60 * 24))
+          if (endD >= startD) {
+            console.log('第' + (dif + 1) + '天', dif % 10)
+            let key = (dif + 1) % 10
+            alert(obj[key].name)
+          } else {
+            console.log('第' + dif + '天', dif % 10)
+            let key = (11 - dif) % 10
+            alert(obj[key].name)
+          }
+          
+        }
+      }
+    </script>
+  </body>
+</html>
